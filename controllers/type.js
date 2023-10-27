@@ -2,7 +2,7 @@ const { Type } = require("../models/models");
 const ApiError = require("../errors/ApiError");
 
 async function create(req, res, next) {
-  const { name } = req.query;
+  const { name } = req.body;
   console.log({ name });
 
   if (!name) {
