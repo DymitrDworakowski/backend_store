@@ -14,6 +14,10 @@ class ApiError extends Error {
     static forbidden(message) {
         return new ApiError(403,message)
     }
+    static noAutorithe() {
+        return new ApiError(401,'No autorithe!')
+    }
+
 }
 
 module.exports = ApiError;

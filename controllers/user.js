@@ -31,6 +31,23 @@ async function register(req, res, next) {
 
 
 async function login(req, res, next) {
+    try {
+        const { email, password } = req.body;
+        const user = await User.findOne({ where: { email } });
+        if (!user) {
+            return next(ApiError.badRequest('User not found!'))
+        }
+        const comparePassword = bcrypt.compareSync(password, user.password);
+        if (!comparePassword) {
+            return next(ApiError.badRequest('Not found!'));
+        }
+        const token = generateJwt(user.id, user.email, user.role);
+        
+        return res.status(200).json({ token });
+    } catch (err) {
+        return next(ApiError.badRequest('ERROR'))
+    }
+    
 
 }
 
