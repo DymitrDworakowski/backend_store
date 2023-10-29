@@ -8,9 +8,9 @@ async function create(req, res, next) {
   if (!name) {
     return next(ApiError.badRequest("Name cannot be null or empty."));
   }
-  
+
   try {
-    const type = await Type.create({name });
+    const type = await Type.create({ name });
     console.log(type);
     return res.status(200).json(type);
   } catch (error) {
