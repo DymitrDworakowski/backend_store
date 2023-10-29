@@ -1,9 +1,8 @@
 const sequelize = require("../db");
 const { DataTypes } = require("sequelize");
 
-
 const User = sequelize.define("user", {
-   id: {
+  id: {
     type: DataTypes.UUID, // Використовуємо UUID для унікальності
     defaultValue: DataTypes.UUIDV4, // За замовчуванням генерувати новий UUID
     primaryKey: true,
@@ -14,22 +13,34 @@ const User = sequelize.define("user", {
 });
 
 const Basket = sequelize.define("basket", {
- id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true},
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+  },
 });
 
 const BasketDevice = sequelize.define("basketDevice", {
-id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true},
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+  },
 });
 
 const Device = sequelize.define("device", {
-  id: {type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4,  primaryKey: true},
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+  },
   name: { type: DataTypes.STRING, unique: true, allowNull: false },
   price: { type: DataTypes.INTEGER, allowNull: false },
   rating: { type: DataTypes.INTEGER, defaultValue: 0 },
   img: { type: DataTypes.STRING, allowNull: false },
 });
 
-const Type = sequelize.define('type', {
+const Type = sequelize.define("type", {
   id: {
     type: DataTypes.UUID, // Використовуємо UUID для унікальності
     defaultValue: DataTypes.UUIDV4, // За замовчуванням генерувати новий UUID
@@ -43,7 +54,7 @@ const Type = sequelize.define('type', {
 });
 
 const Brand = sequelize.define("brand", {
-   id: {
+  id: {
     type: DataTypes.UUID, // Використовуємо UUID для унікальності
     defaultValue: DataTypes.UUIDV4, // За замовчуванням генерувати новий UUID
     primaryKey: true,
@@ -103,7 +114,7 @@ Rating.belongsTo(Device);
 Device.hasMany(BasketDevice);
 BasketDevice.belongsTo(Device);
 
-Device.hasMany(DeviceInfo, {as:'info'});
+Device.hasMany(DeviceInfo, { as: "info" });
 DeviceInfo.belongsTo(Device);
 
 Type.belongsToMany(Brand, { through: TypeBrand });
