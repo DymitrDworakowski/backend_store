@@ -4,6 +4,6 @@ const Rating = require("../controllers/rating");
 
 router.post("/", Rating.create);
 router.delete("/:id", Rating.deleteRating);
-router.get("/:id", Rating.getById);
+router.patch("/:id", Rating.updateRating);
 
 module.exports = router;
