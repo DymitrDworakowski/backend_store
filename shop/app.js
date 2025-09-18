@@ -1,7 +1,4 @@
-var commentsRouter = require('./routes/comments');
-app.use('/comments', commentsRouter);
-var cartRouter = require('./routes/cart');
-app.use('/cart', cartRouter);
+
 var createError = require('http-errors');
 var mongoose = require('mongoose');
 var express = require('express');
@@ -9,10 +6,13 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var app = express();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
+var commentsRouter = require('./routes/comments');
+var cartRouter = require('./routes/cart');
 
 
 // Підключення до MongoDB
@@ -55,4 +55,14 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+
+const http = require('http');
+const port = process.env.PORT || 3000;
+app.set('port', port);
+const server = http.createServer(app);
+server.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
+server.on('error', (error) => {
+  console.error('Server error:', error);
+});
