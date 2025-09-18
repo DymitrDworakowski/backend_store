@@ -4,6 +4,14 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const { createProduct, updateProduct, deleteProduct } = require('../controllers/productController');
+const { authenticateToken } = require('../middleware/auth');
+
+function isAdmin(req, res, next) {
+	if (req.user && req.user.isAdmin) {
+		return next();
+	}
+	return res.status(403).json({ error: 'Access denied: admin only' });
+}
 
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
@@ -15,13 +23,13 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// Додати товар з фото
-router.post('/products', upload.single('image'), createProduct);
+// Додати товар з фото (тільки для адміна)
+router.post('/products', authenticateToken, isAdmin, upload.single('image'), createProduct);
 
-// Редагувати товар
-router.put('/products/:id', updateProduct);
+// Редагувати товар (тільки для адміна)
+router.put('/products/:id', authenticateToken, isAdmin, updateProduct);
 
-// Видалити товар
-router.delete('/products/:id', deleteProduct);
+// Видалити товар (тільки для адміна)
+router.delete('/products/:id', authenticateToken, isAdmin, deleteProduct);
 
 module.exports = router;
