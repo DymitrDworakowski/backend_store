@@ -9,9 +9,9 @@ exports.register = async (req, res) => {
   try {
     const { error } = userSchemaJoi.validate(req.body);
     if (error) return res.status(400).json({ error: error.details[0].message });
-    const { username, password } = req.body;
+    const { username, password, email } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({ username, password: hashedPassword });
+    const user = new User({ username, password: hashedPassword, email });
     await user.save();
     res.status(201).json({ message: 'User registered' });
   } catch (err) {
