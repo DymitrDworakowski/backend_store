@@ -26,7 +26,7 @@ exports.updateProduct = async (req, res) => {
 exports.deleteProduct = async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Товар видалено' });
+    res.json({ message: 'Product deleted' });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
