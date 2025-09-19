@@ -1,4 +1,6 @@
 
+
+require('dotenv').config();
 var createError = require('http-errors');
 var mongoose = require('mongoose');
 var express = require('express');
@@ -11,12 +13,13 @@ var app = express();
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
+var productsRouter = require('./routes/products');
 var commentsRouter = require('./routes/comments');
 var cartRouter = require('./routes/cart');
 
 
 // Підключення до MongoDB
-mongoose.connect('mongodb://localhost:27017/shopdb', {
+mongoose.connect(process.env.DB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
@@ -36,6 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', indexRouter);
+app.use('/products', productsRouter);
 app.use('/users', usersRouter);
 app.use('/admin', adminRouter);
 

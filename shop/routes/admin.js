@@ -4,14 +4,14 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const { createProduct, updateProduct, deleteProduct } = require('../controllers/productController');
-const { authenticateToken } = require('../middleware/auth');
+const { authenticateToken ,isAdmin} = require('../middleware/auth');
 
-function isAdmin(req, res, next) {
-	if (req.user && req.user.isAdmin) {
-		return next();
-	}
-	return res.status(403).json({ error: 'Access denied: admin only' });
-}
+// function isAdmin(req, res, next) {
+// 	if (req.user && req.user.isAdmin) {
+// 		return next();
+// 	}
+// 	return res.status(403).json({ error: 'Access denied: admin only' });
+// }
 
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
