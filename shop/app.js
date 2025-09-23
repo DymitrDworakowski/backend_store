@@ -7,6 +7,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var cors = require('cors');
 
 var app = express();
 
@@ -17,6 +18,14 @@ var productsRouter = require('./routes/products');
 var commentsRouter = require('./routes/comments');
 var cartRouter = require('./routes/cart');
 
+
+// CORS middleware 
+app.use(cors({
+  origin: ['http://localhost:3000', 'https://your-frontend-domain.railway.app'], // Домен вашого фронтенду
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+}));
 
 // Підключення до MongoDB
 mongoose.connect(process.env.DB_URI, {
