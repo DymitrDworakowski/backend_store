@@ -4,12 +4,20 @@ require('dotenv').config();
 var createError = require('http-errors');
 var mongoose = require('mongoose');
 var express = require('express');
+var cors = require('cors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
 
 var app = express();
+
+// CORS - configurable via CORS_ORIGIN in .env (defaults to allow all)
+app.use(cors({
+  origin: process.env.CORS_ORIGIN || '*',
+  methods: ['GET','POST','PUT','DELETE','OPTIONS'],
+  allowedHeaders: ['Content-Type','Authorization']
+}));
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
