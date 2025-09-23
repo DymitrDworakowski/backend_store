@@ -21,7 +21,7 @@ var cartRouter = require('./routes/cart');
 
 // CORS middleware 
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://your-frontend-domain.railway.app'], // Домен вашого фронтенду
+  origin: ['http://localhost:3000'], // Домен вашого фронтенду
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
