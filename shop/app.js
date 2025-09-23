@@ -13,11 +13,7 @@ var cors = require('cors');
 var app = express();
 
 // CORS - configurable via CORS_ORIGIN in .env (defaults to allow all)
-app.use(cors({
-  origin: process.env.CORS_ORIGIN || '*',
-  methods: ['GET','POST','PUT','DELETE','OPTIONS'],
-  allowedHeaders: ['Content-Type','Authorization']
-}));
+app.use(cors());
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
