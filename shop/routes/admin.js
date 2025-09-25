@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
-const { createProduct, updateProduct, deleteProduct } = require('../controllers/productController');
+const { createProduct, updateProduct, deleteProduct, getAdminProducts } = require('../controllers/productController');
 const { authenticateToken ,isAdmin} = require('../middleware/auth');
 
 // function isAdmin(req, res, next) {
@@ -25,6 +25,9 @@ const upload = multer({ storage });
 
 // Додати товар з фото (тільки для адміна)
 router.post('/products', authenticateToken, isAdmin, upload.single('image'), createProduct);
+
+// Отримати продукти з фільтрацією/сортом (тільки для адміна)
+router.get('/products', authenticateToken, isAdmin, getAdminProducts);
 
 // Редагувати товар (тільки для адміна)
 router.put('/products/:id', authenticateToken, isAdmin, updateProduct);
