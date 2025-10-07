@@ -1,5 +1,7 @@
 const Product = require("../models/Product");
 
+const mongoose = require('mongoose');
+
 exports.getAllProducts = async (req, res) => {
   try {
     const {
@@ -183,6 +185,21 @@ exports.getAdminProducts = async (req, res) => {
     }
 
     res.json(response);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+// Get single product by id (public)
+exports.getProductById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ error: 'Invalid product id' });
+    }
+    const product = await Product.findById(id).exec();
+    if (!product) return res.status(404).json({ error: 'Product not found' });
+    res.json(product);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
