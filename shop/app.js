@@ -12,18 +12,11 @@ var logger = require('morgan');
 // Create express app once
 var app = express();
 
-// CORS - support comma-separated list in CORS_ORIGIN (e.g. "http://localhost:3000,https://yourdomain.com")
-const rawOrigins = process.env.CORS_ORIGIN || '';
-const allowedOrigins = rawOrigins.split(',').map(s => s.trim()).filter(Boolean);
+// CORS - allow requests from any origin (use origin: true to echo request Origin)
+// Note: when credentials: true is set, browsers will reject '*' as origin — using origin: true
+// ensures the Access-Control-Allow-Origin header echoes the incoming Origin value.
 app.use(cors({
-  origin: function(origin, callback) {
-    // allow requests with no origin (like mobile apps, curl, server-to-server)
-    if (!origin) return callback(null, true);
-    // if no origins configured, allow all (backwards compatible)
-    if (allowedOrigins.length === 0) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) !== -1) return callback(null, true);
-    return callback(new Error('CORS policy: origin not allowed'));
-  },
+  origin: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   credentials: true
